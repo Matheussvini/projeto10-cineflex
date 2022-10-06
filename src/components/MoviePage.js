@@ -11,12 +11,12 @@ function isEmpty(obj) {
   return true;
 }
 
-export default function MoviePage({ props }) {
+export default function MoviePage() {
   const [movie, setMovie] = useState({});
   const { filmeId } = useParams();
   const [error, setError] = useState(null);
 
-  console.log("mov", movie.length);
+  console.log("filme vazio?", isEmpty(movie));
   useEffect(() => {
     const promise = axios.get(
       `https://mock-api.driven.com.br/api/v5/cineflex/movies/${filmeId}/showtimes`
@@ -25,7 +25,7 @@ export default function MoviePage({ props }) {
     promise.then((res) => {
       console.log(res);
       setMovie(res.data);
-      console.log("movie", isEmpty(res));
+      console.log("res está vazia?", isEmpty(res));
       setError(null);
     });
 
@@ -64,6 +64,12 @@ export default function MoviePage({ props }) {
           </Schedules>
         </>
       ))}
+      <Footer>
+        <BoxMovie>
+          <img src={movie.posterURL} alt={`Capa do filme ${movie.title}`} />
+        </BoxMovie>
+        <h1>{movie.title}</h1>
+      </Footer>
     </Container>
   );
 }
@@ -76,7 +82,7 @@ const Container = styled.div`
   max-width: 390px;
   margin: 0 15px;
   box-sizing: border-box;
-  padding: 0 24px;
+  padding: 0 24px 50px 24px;
   h3 {
     font-size: 24px;
     line-height: 28px;
@@ -107,8 +113,47 @@ const Schedules = styled.div`
     line-height: 21px;
     color: #fff;
     cursor: pointer;
-    &:hover, &:focus{
-        opacity: 60%;
+    &:hover,
+    &:focus {
+      opacity: 60%;
     }
+  }
+`;
+const Footer = styled.div`
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  //width: 100%;
+  height: 117px;
+  width: 390px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  transform: translate(-48%, 0);
+  background-color: #dfe6ed;
+  box-sizing: border-box;
+  border: 1px solid #9eadba;
+  overflow: hidden;
+  h1 {
+    font-size: 26px;
+    line-height: 30px;
+    color: #293845;
+  }
+`;
+const BoxMovie = styled.div`
+  height: 89px;
+  width: 64px;
+  border-radius: 2px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  //margin: 0 15px 15px 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 14px;
+
+  img {
+    width: 48px;
+    height: 72px;
   }
 `;

@@ -79,7 +79,30 @@ export default function SectionPage() {
         alert("CPF invalido");
         setCpfUser("");
       }
+    }else{
+      setCpfUser("");
     }
+  }
+  function abc(idCompare){
+    console.log("entrou")
+    for(let i=0; i < seatsSelected.length; i++){
+      console.log(seatsSelected[i].id === idCompare)
+      if(seatsSelected[i].id === idCompare ){
+        return true
+      }
+    }
+    return false
+  }
+
+  function avaliaOnclick(idCompare, s){
+    for(let i=0; i < seatsSelected.length; i++){
+      if(seatsSelected[i].id === idCompare ){
+        setSeatsSelected(
+          seatsSelected.filter((item) => item.id !== s.id)
+        )
+      }
+    }
+    setSeatsSelected([...seatsSelected, {id: s.id, name: s.name}])
   }
 
   return (
@@ -89,14 +112,8 @@ export default function SectionPage() {
         {section.seats.map((s) => (
           <Seat
             isAvailable={s.isAvailable}
-            selected={seatsSelected.includes(s.id) ? true : false}
-            onClick={() =>
-              seatsSelected.includes(s.id)
-                ? setSeatsSelected(
-                    seatsSelected.filter((item) => item !== s.id)
-                  )
-                : setSeatsSelected([...seatsSelected, s.id])
-            }
+           selected={() => abc(s.id)}
+            onClick={() => avaliaOnclick(s.id, s)}
             disabled={!s.isAvailable}
             key={s.id}
           >
@@ -118,15 +135,17 @@ export default function SectionPage() {
           <span>Indisponível</span>
         </div>
       </Subtitle>
-      <Formulario>
-        <h4>Nome do comprador:</h4>
+
+      {seatsSelected.map((a) => (
+        <Formulario>
+        <h4>Nome do comprador assento {a.name}:</h4>
         <input
           type="text"
           placeholder="Digite seu nome..."
           onChange={(e) => name(e)}
           value={nameUser}
         />
-        <h4>CPF do comprador:</h4>
+        <h4>CPF do comprador assento {a.id}:</h4>
         <input
           type="text"
           placeholder="Digite seu CPF..."
@@ -136,6 +155,8 @@ export default function SectionPage() {
           pattern="[0-9]"
         />
       </Formulario>
+      ))}
+      
 
       <Footer>
         <BoxMovie>
@@ -164,6 +185,7 @@ const Container = styled.div`
   margin: 0 15px;
   box-sizing: border-box;
   padding: 0 20px;
+  padding-bottom: 50px;
   h3 {
     font-size: 24px;
     line-height: 28px;
@@ -212,6 +234,7 @@ const Subtitle = styled.div`
   justify-content: space-evenly;
   align-items: center;
   flex-wrap: wrap;
+  margin-bottom: 42px;
   div {
     display: flex;
     flex-direction: column;
@@ -219,6 +242,32 @@ const Subtitle = styled.div`
     font-size: 13px;
     line-height: 15px;
     color: #4e5a65;
+  }
+`;
+const Formulario = styled.div`
+  display: flex;
+  flex-direction: column;
+  //background-color: aquamarine;
+  font-size: 18px;
+  line-height: 21px;
+  color: #293845;
+  margin-bottom: 20px;
+  input {
+    width: 327px;
+    height: 51px;
+    background: #ffffff;
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    margin-bottom: 7px;
+    font-size: 18px;
+      line-height: 21px;
+      color: #000;
+    &::placeholder {
+      font-style: italic;
+      font-size: 18px;
+      line-height: 21px;
+      color: #AFAFAF;
+    }
   }
 `;
 const Footer = styled.div`
@@ -258,9 +307,4 @@ const BoxMovie = styled.div`
     width: 48px;
     height: 72px;
   }
-`;
-const Formulario = styled.div`
-  display: flex;
-  flex-direction: column;
-  background-color: aquamarine;
 `;

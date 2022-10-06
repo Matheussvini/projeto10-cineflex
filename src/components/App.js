@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import GlobalStyle from "../styles/GlobalStyle";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import logo from "../images/logo.png";
 import HomePage from "./HomePage";
 import MoviesListPage from "./MoviesListPage";
@@ -9,25 +9,31 @@ import SectionPage from "./SectionPage";
 import SucessPage from "./SucessPage";
 import { useState } from "react";
 
+
 export default function App() {
   const [removeNavBar, setRemoveNavBar] = useState(false);
 
   return (
     <BrowserRouter>
       <ScreenContainer show={removeNavBar}>
-        {!removeNavBar &&
-        <NavBar>
-          <img src={logo} alt="Logo CineFlex" />
-        </NavBar>
-        }
+        {!removeNavBar && (
+          <NavBar>
+            <Link to="/" >
+            <img src={logo} alt="Logo CineFlex" />
+            </Link>            
+          </NavBar>
+        )}
         <Routes>
           <Route
             path="/"
             element={<HomePage setRemoveNavBar={setRemoveNavBar} />}
           />
-          <Route path="/filmes-em-cartaz" element={<MoviesListPage />} />
-          <Route path="/filme" element={<MoviePage setRemoveNavBar={setRemoveNavBar} />} />
-          <Route path="/sessao" element={<SectionPage />} />
+          <Route
+            path="/filmes-em-cartaz"
+            element={<MoviesListPage setRemoveNavBar={setRemoveNavBar} />}
+          />
+          <Route path="/filme/:filmeId" element={<MoviePage />} />
+          <Route path="/sessao/:sessaoID" element={<SectionPage />} />
           <Route path="/sucesso" element={<SucessPage />} />
         </Routes>
         <GlobalStyle />

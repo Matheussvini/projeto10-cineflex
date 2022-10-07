@@ -127,16 +127,27 @@ export default function SectionPage({ setReservation }) {
               ids: [...form.ids, id],
               compradores: [...form.compradores, { idAssento: id, [name]: value}],
             });
-    }
+    }else{
     // compradores
-    const bb = form.compradores.find((item) => item.id === id); // retorna {id: XX, name: YY, cpf: ZZ}
+    const bb = form.compradores.find((item) => item.idAssento === id); // retorna {id: XX, name: YY, cpf: ZZ}
 
+      if(name === "nome"){
         const i = form.compradores.indexOf(bb)
-        const newObj = form.compradores[i]
+        let newArray = form.compradores
+        newArray[i].nome = value
         setForm({
-          ...form, compradores: [...form.compradores[i], [name]: value]
+          ...form, compradores: newArray
         })
-
+      } else{
+        const i = form.compradores.indexOf(bb)
+        let newArray = form.compradores
+        console.log(newArray[i])
+        newArray[i].cpf = value
+        setForm({
+          ...form, compradores: newArray
+        })
+      }
+    }
     // if(name.includes("nome")){
     //   if(form.ids.length === 0){
     //     setForm({
@@ -220,22 +231,22 @@ export default function SectionPage({ setReservation }) {
           <Formulario key={a.id} id={a.id}>
             <label htmlFor="nome">Nome do comprador assento {a.name}:</label>
             <input
-              name={`nome${a.name}`}
+              name="nome"
               id={a.id}
               type="text"
               placeholder="Digite seu nome..."
               onBlur={handleForm}
-              value={form.compradores[`nome${a.name}`]}
+              //value={form.compradores[`nome${a.name}`]}
               required
             />
             <label htmlFor="cpf">CPF do comprador assento {a.id}:</label>
             <input
-              name={`cpf${a.name}`}
+              name="cpf"
               id={a.id}
               type="text"
               placeholder="Digite seu CPF..."
               onBlur={handleForm}
-              value={form.compradores[`cpf${a.name}`]}
+              //value={form.compradores[`cpf${a.name}`]}
               required
               // maxLength="14"
               // pattern="[0-9]"

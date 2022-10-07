@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import alfabeto from "./alfabeto";
 
@@ -11,13 +11,18 @@ function isEmpty(obj) {
   return true;
 }
 
-export default function SectionPage() {
+export default function SectionPage({ setReservation }) {
   const [section, setSection] = useState({});
   const { sessaoID } = useParams();
   const [error, setError] = useState(null);
   const [seatsSelected, setSeatsSelected] = useState([]);
   const [nameUser, setNameUser] = useState(undefined);
   const [cpfUser, setCpfUser] = useState("");
+  const [form, setForm] = useState({
+    ids: [],
+    compradores: [{ idAssento: "", nome: "", cpf: "" }],
+  });
+  const navigate = useNavigate();
 
   useEffect(() => {
     const promise = axios.get(
@@ -42,67 +47,123 @@ export default function SectionPage() {
     return <div>Carregando...</div>;
   }
 
-  function name(e) {
-    const value = e.target.value;
+  // function name(e) {
+  //   const value = e.target.value;
+  // }
+  // function cpf(e) {
+  //   const value = e.target.value;
+
+  //   let cpfUpdated;
+  //   if (value !== "") {
+  //     for (let i = 0; i < value.length; i++) {
+  //       if (alfabeto.includes(value[i])) {
+  //         return setCpfUser(""), alert("CPF inválido");
+  //       }
+  //     }
+  //     cpfUpdated = value.replace(
+  //       /(\d{3})(\d{3})(\d{3})(\d{2})/,
+  //       function (regex, argumento1, argumento2, argumento3, argumento4) {
+  //         return (
+  //           argumento1 + "." + argumento2 + "." + argumento3 + "-" + argumento4
+  //         );
+  //       }
+  //     );
+  //     setCpfUser(cpfUpdated);
+  //     let regex = /\d/g;
+  //     let cpfOnlyNumber = cpfUpdated.match(regex).join("");
+  //     console.log("filtro", cpfOnlyNumber);
+
+  //     let cpfValido = /^(([0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}))$/;
+  //     if (
+  //       cpfValido.test(cpfUpdated) == false &&
+  //       (cpfUpdated.length === 14 ||
+  //         cpfOnlyNumber.length === 11 ||
+  //         cpfOnlyNumber.length === 0)
+  //     ) {
+  //       alert("CPF invalido");
+  //       setCpfUser("");
+  //     }
+  //   } else {
+  //     setCpfUser("");
+  //   }
+  // }
+  // function abc(idCompare) {
+  //   console.log("entrou");
+  //   for (let i = 0; i < seatsSelected.length; i++) {
+  //     console.log(seatsSelected[i].id === idCompare);
+  //     if (seatsSelected[i].id === idCompare) {
+  //       return true;
+  //     }
+  //   }
+  //   return false;
+  // }
+
+  function avaliaOnclick(element) {
+    for (let i = 0; i < seatsSelected.length; i++) {
+      if (seatsSelected[i].id === element.id) {
+        return setSeatsSelected(
+          seatsSelected.filter((item) => item.id !== element.id)
+        );
+      }
+    }
+    setSeatsSelected([
+      ...seatsSelected,
+      { id: element.id, name: element.name },
+    ]);
   }
 
-  function cpf(e) {
-    const value = e.target.value;
+  
+  console.log(form)
 
-    let cpfUpdated;
-    if (value !== "") {
-      for (let i = 0; i < value.length; i++) {
-        if (alfabeto.includes(value[i])) {
-          return setCpfUser(""), alert("CPF inválido");
-        }
-      }
-      cpfUpdated = value.replace(
-        /(\d{3})(\d{3})(\d{3})(\d{2})/,
-        function (regex, argumento1, argumento2, argumento3, argumento4) {
-          return (
-            argumento1 + "." + argumento2 + "." + argumento3 + "-" + argumento4
-          );
-        }
-      );
-      setCpfUser(cpfUpdated);
-      let regex = /\d/g;
-      let cpfOnlyNumber = cpfUpdated.match(regex).join("");
-      console.log("filtro", cpfOnlyNumber);
+  function handleForm(e) {
+    console.log(e.target)
+    const { name, value, id} = e.target;
+    
+    if(name.includes("nome")){
+      if(form.ids.length === 0){
+        setForm({
+          ids: [id],
+          compradores: [{ idAssento: id, [name]: value }],
+        });
+      }else{
+        setForm({
+          ids: [...form.ids, id],
+          compradores: [...form.compradores, { idAssento: id, [name]: value}],
+        });
+      }      
+    }
+    if(name.includes("cpf")){      
+        setForm({
+          ...form,
+          compradores: {...form.compradores[form.compradores.length - 1], [name]: value  },
+        });
+      
+    }
 
-      let cpfValido = /^(([0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}))$/;
-      if (
-        cpfValido.test(cpfUpdated) == false &&
-        (cpfUpdated.length === 14 ||
-          cpfOnlyNumber.length === 11 ||
-          cpfOnlyNumber.length === 0)
-      ) {
-        alert("CPF invalido");
-        setCpfUser("");
-      }
-    }else{
-      setCpfUser("");
-    }
-  }
-  function abc(idCompare){
-    console.log("entrou")
-    for(let i=0; i < seatsSelected.length; i++){
-      console.log(seatsSelected[i].id === idCompare)
-      if(seatsSelected[i].id === idCompare ){
-        return true
-      }
-    }
-    return false
+    // setForm({
+    //   ids: [...form.ids, id],
+    //   compradores: [...form.compradores, { idAssento: id, [name]: value }],
+    // });
+    // // setForm({...form, [e.target.name]: e.target.value})
   }
 
-  function avaliaOnclick(idCompare, s){
-    for(let i=0; i < seatsSelected.length; i++){
-      if(seatsSelected[i].id === idCompare ){
-        setSeatsSelected(
-          seatsSelected.filter((item) => item.id !== s.id)
-        )
-      }
-    }
-    setSeatsSelected([...seatsSelected, {id: s.id, name: s.name}])
+  function bookSeats(e) {
+    console.log(form)
+
+    e.preventDefault();
+    const URL = "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many"
+
+    const promise = axios.post(URL, form)
+
+    promise.then((res) => {
+      console.log("resposta", res)
+      navigate("/")
+    })
+
+    promise.catch((err) => {
+      alert(err.response.data.message)
+    })
+
   }
 
   return (
@@ -112,8 +173,9 @@ export default function SectionPage() {
         {section.seats.map((s) => (
           <Seat
             isAvailable={s.isAvailable}
-           selected={() => abc(s.id)}
-            onClick={() => avaliaOnclick(s.id, s)}
+            seatsSelected={seatsSelected}
+            seatId={s.id}
+            onClick={() => avaliaOnclick(s)}
             disabled={!s.isAvailable}
             key={s.id}
           >
@@ -123,41 +185,47 @@ export default function SectionPage() {
       </SeatsBox>
       <Subtitle>
         <div>
-          <Seat isAvailable={true} selected={true} />
+          <SubSeat color={"green"} />
           <span>Selecionado</span>
         </div>
         <div>
-          <Seat isAvailable={true} />
+          <SubSeat color={"gray"} />
           <span>Disponível</span>
         </div>
         <div>
-          <Seat isAvailable={false} />
+          <SubSeat color={"yellow"} />
           <span>Indisponível</span>
         </div>
       </Subtitle>
-
-      {seatsSelected.map((a) => (
-        <Formulario>
-        <h4>Nome do comprador assento {a.name}:</h4>
-        <input
-          type="text"
-          placeholder="Digite seu nome..."
-          onChange={(e) => name(e)}
-          value={nameUser}
-        />
-        <h4>CPF do comprador assento {a.id}:</h4>
-        <input
-          type="text"
-          placeholder="Digite seu CPF..."
-          onChange={(e) => cpf(e)}
-          value={cpfUser}
-          maxLength="14"
-          pattern="[0-9]"
-        />
-      </Formulario>
-      ))}
-      
-
+      <form onSubmit={bookSeats}>
+        {seatsSelected.map((a) => (
+          <Formulario key={a.id} id={a.id}>
+            <label htmlFor="nome">Nome do comprador assento {a.name}:</label>
+            <input
+              name={`nome${a.name}`}
+              id={a.id}
+              type="text"
+              placeholder="Digite seu nome..."
+              onBlur={handleForm}
+              value={form.compradores[`nome${a.name}`]}
+              required
+            />
+            <label htmlFor="cpf">CPF do comprador assento {a.id}:</label>
+            <input
+              name={`cpf${a.name}`}
+              id={a.id}
+              type="text"
+              placeholder="Digite seu CPF..."
+              onBlur={handleForm}
+              value={form.compradores[`cpf${a.name}`]}
+              required
+              // maxLength="14"
+              // pattern="[0-9]"
+            />
+          </Formulario>
+        ))}
+        <button type="submit">Reservar assento(s)</button>
+      </form>
       <Footer>
         <BoxMovie>
           <img
@@ -181,7 +249,8 @@ const Container = styled.div`
   flex-direction: column;
   width: 100%;
   max-width: 390px;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
   margin: 0 15px;
   box-sizing: border-box;
   padding: 0 20px;
@@ -213,12 +282,16 @@ const Seat = styled.button`
   background-color: ${(props) =>
     !props.isAvailable
       ? "#FBE192"
-      : (props2) => (props2.selected ? "#8DD7CF" : "#C3CFD9")};
+      : props?.seatsSelected.find((item) => item?.id === props.seatId)
+      ? "#8DD7CF"
+      : "#C3CFD9"};
   border: 1px solid
     ${(props) =>
       !props.isAvailable
         ? "#F7C52B"
-        : (props2) => (props2.selected ? "#1AAE9E" : "#7B8B99")};
+        : props?.seatsSelected.find((item) => item?.id === props.seatId)
+        ? "#45BDB0"
+        : "#808F9D"};
   border-radius: 12px;
   display: flex;
   justify-content: center;
@@ -244,6 +317,21 @@ const Subtitle = styled.div`
     color: #4e5a65;
   }
 `;
+const SubSeat = styled(Seat)`
+  background-color: ${(props) =>
+    props.color === "yellow"
+      ? "#FBE192"
+      : props?.color === "green"
+      ? "#8DD7CF"
+      : "#C3CFD9"};
+  border: 1px solid
+    ${(props) =>
+      props.color === "yellow"
+        ? "#F7C52B"
+        : props?.color === "green"
+        ? "#45BDB0"
+        : "#808F9D"};
+`;
 const Formulario = styled.div`
   display: flex;
   flex-direction: column;
@@ -260,13 +348,13 @@ const Formulario = styled.div`
     border-radius: 3px;
     margin-bottom: 7px;
     font-size: 18px;
-      line-height: 21px;
-      color: #000;
+    line-height: 21px;
+    color: #000;
     &::placeholder {
       font-style: italic;
       font-size: 18px;
       line-height: 21px;
-      color: #AFAFAF;
+      color: #afafaf;
     }
   }
 `;

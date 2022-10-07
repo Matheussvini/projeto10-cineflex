@@ -20,7 +20,7 @@ export default function SectionPage({ setReservation }) {
   const [cpfUser, setCpfUser] = useState("");
   const [form, setForm] = useState({
     ids: [],
-    compradores: [{ idAssento: "", nome: "", cpf: "" }],
+    compradores: [],
   });
   const navigate = useNavigate();
 
@@ -117,28 +117,46 @@ export default function SectionPage({ setReservation }) {
 
   function handleForm(e) {
     console.log(e.target)
-    const { name, value, id} = e.target;
+    const { name, value, id} = e.target;  //name = campo do input (nome ou cpf), value = valor correspondente ao input
     
-    if(name.includes("nome")){
-      if(form.ids.length === 0){
-        setForm({
-          ids: [id],
-          compradores: [{ idAssento: id, [name]: value }],
-        });
-      }else{
-        setForm({
-          ids: [...form.ids, id],
-          compradores: [...form.compradores, { idAssento: id, [name]: value}],
-        });
-      }      
+    // lista de ids
+    const aa = form.ids.find((item) => item === id); // retorna o numero do id
+    // console.log("1o", aa)
+    if(aa === undefined){
+      setForm({
+              ids: [...form.ids, id],
+              compradores: [...form.compradores, { idAssento: id, [name]: value}],
+            });
     }
-    if(name.includes("cpf")){      
+    // compradores
+    const bb = form.compradores.find((item) => item.id === id); // retorna {id: XX, name: YY, cpf: ZZ}
+
+        const i = form.compradores.indexOf(bb)
+        const newObj = form.compradores[i]
         setForm({
-          ...form,
-          compradores: {...form.compradores[form.compradores.length - 1], [name]: value  },
-        });
+          ...form, compradores: [...form.compradores[i], [name]: value]
+        })
+
+    // if(name.includes("nome")){
+    //   if(form.ids.length === 0){
+    //     setForm({
+    //       ids: [id],
+    //       compradores: [{ idAssento: id, [name]: value }],
+    //     });
+    //   }else{
+    //     setForm({
+    //       ids: [...form.ids, id],
+    //       compradores: [...form.compradores, { idAssento: id, [name]: value}],
+    //     });
+    //   }      
+    // }
+    // if(name.includes("cpf")){      
+    //     setForm({
+    //       ...form,
+    //       compradores: {...form.compradores[form.compradores.length - 1], [name]: value  },
+    //     });
       
-    }
+    // }
 
     // setForm({
     //   ids: [...form.ids, id],

@@ -13,6 +13,8 @@ import { useState } from "react";
 export default function App() {
   const [removeNavBar, setRemoveNavBar] = useState(false);
   const [reservation, setReservation] = useState({});
+  const [section, setSection] = useState({});
+
 
   return (
     <BrowserRouter>
@@ -34,8 +36,8 @@ export default function App() {
             element={<MoviesListPage setRemoveNavBar={setRemoveNavBar} />}
           />
           <Route path="/filme/:filmeId" element={<MoviePage />} />
-          <Route path="/sessao/:sessaoID" element={<SectionPage setReservation={setReservation} />} />
-          <Route path="/sucesso" element={<SucessPage reservation={reservation} />} />
+          <Route path="/sessao/:sessaoID" element={<SectionPage section={section} setSection={setSection} setReservation={setReservation} />} />
+          <Route path="/sucesso" element={<SucessPage section={section} reservation={reservation} />} />
         </Routes>
         <GlobalStyle />
       </ScreenContainer>

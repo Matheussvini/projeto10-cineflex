@@ -11,10 +11,9 @@ function isEmpty(obj) {
   return true;
 }
 
-export default function SectionPage({ section, setSection, setReservation }) {
+export default function SectionPage({ section, setSection, setReservation, seatsSelected, setSeatsSelected }) {
   const { sessaoID } = useParams();
   const [error, setError] = useState(null);
-  const [seatsSelected, setSeatsSelected] = useState([]);
   const [nameUser, setNameUser] = useState(undefined);
   const [cpfUser, setCpfUser] = useState("");
   const [form, setForm] = useState({
@@ -345,6 +344,7 @@ const Subtitle = styled.div`
   align-items: center;
   flex-wrap: wrap;
   margin-bottom: 42px;
+  width: 100%;
   div {
     display: flex;
     flex-direction: column;

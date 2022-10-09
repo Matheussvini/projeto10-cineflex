@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import BackArrow from "./modelComponents";
 import Movie from "./Movie";
 
 export default function MoviesListPage({ setRemoveNavBar }) {
@@ -35,6 +36,7 @@ export default function MoviesListPage({ setRemoveNavBar }) {
 
   return (
     <Container>
+      <BackArrow way="/" />
       <h3>Selecione o filme</h3>
       <MoviesContainer>
         {movies.map((mov) => (

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import alfabeto from "./alfabeto";
+import BackArrow from "./modelComponents";
 
 function isEmpty(obj) {
   for (let prop in obj) {
@@ -28,6 +29,7 @@ export default function SectionPage({
   });
   const navigate = useNavigate();
   const [enableReservation, setEnableReservation] = useState(false);
+  console.log("AQUIIIIIIII", section)
 
   useEffect(() => {
     const promise = axios.get(
@@ -236,6 +238,7 @@ export default function SectionPage({
 
   return (
     <Container>
+      <BackArrow way={`/filme/${section.movie.id}`} />
       <h3>Selecione o(s) assento(s)</h3>
       <SeatsBox>
         {section.seats.map((s) => (
@@ -379,6 +382,11 @@ const Seat = styled.button`
   font-size: 11px;
   line-height: 13px;
   color: #000;
+  &:hover{
+  opacity: ${(props) => (props.isAvailable && "60%")};
+  transform: ${(props) => (props.isAvailable && "translateY(-5px)")};
+  box-shadow: ${(props) => (props.isAvailable && "-4px 4px 4px rgba(0, 0, 0, 0.25)")};
+  }
 `;
 const Subtitle = styled.div`
   display: flex;

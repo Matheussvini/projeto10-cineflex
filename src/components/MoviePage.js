@@ -2,6 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
+import BackArrow from "./modelComponents";
 
 function isEmpty(obj) {
   for (let prop in obj) {
@@ -46,6 +47,7 @@ export default function MoviePage() {
 
   return (
     <Container>
+      <BackArrow way="/filmes-em-cartaz" />
       {console.log(movie)}
       {console.log(movie.days)}
       <h3>Selecione um horário</h3>

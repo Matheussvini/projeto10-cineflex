@@ -11,7 +11,13 @@ function isEmpty(obj) {
   return true;
 }
 
-export default function SectionPage({ section, setSection, setReservation, seatsSelected, setSeatsSelected }) {
+export default function SectionPage({
+  section,
+  setSection,
+  setReservation,
+  seatsSelected,
+  setSeatsSelected,
+}) {
   const { sessaoID } = useParams();
   const [error, setError] = useState(null);
   const [nameUser, setNameUser] = useState(undefined);
@@ -21,7 +27,7 @@ export default function SectionPage({ section, setSection, setReservation, seats
     compradores: [],
   });
   const navigate = useNavigate();
-  const [enableReservation, setEnableReservation] = useState(false)
+  const [enableReservation, setEnableReservation] = useState(false);
 
   useEffect(() => {
     const promise = axios.get(
@@ -100,10 +106,10 @@ export default function SectionPage({ section, setSection, setReservation, seats
   function avaliaOnclick(element) {
     for (let i = 0; i < seatsSelected.length; i++) {
       if (seatsSelected[i].id === element.id) {
-        if(seatsSelected.length === 1){
-          setEnableReservation(false)
-        } else{ 
-          setEnableReservation(true)
+        if (seatsSelected.length === 1) {
+          setEnableReservation(false);
+        } else {
+          setEnableReservation(true);
         }
         return setSeatsSelected(
           seatsSelected.filter((item) => item.id !== element.id)
@@ -119,10 +125,37 @@ export default function SectionPage({ section, setSection, setReservation, seats
 
   console.log(form);
 
+  function cpfLength(e){
+    if(e.target.value.length !== 11){
+      alert("CPF inválido! Digite 11 dígitos")
+    }
+  }
+
   function handleForm(e) {
     console.log(e.target);
     const { name, value, id } = e.target; //name = campo do input (nome ou cpf), value = valor correspondente ao input
 
+    if(name === "nome"){
+      if (value !== "") {
+            for (let i = 0; i < value.length; i++) {
+              if (!alfabeto.includes(value[i])) {
+                alert("Nome inválido, digite somente letras");
+              }
+            }
+    }
+
+  }
+
+    if(name === "cpf"){
+      if (value !== "") {
+            for (let i = 0; i < value.length; i++) {
+              if (alfabeto.includes(value[i])) {
+                alert("CPF inválido, digite somente números");
+              }
+            }
+    }
+
+  }
     // lista de ids
     const aa = form.ids.find((item) => item === id); // retorna o numero do id
     // console.log("1o", aa)
@@ -192,7 +225,7 @@ export default function SectionPage({ section, setSection, setReservation, seats
     const promise = axios.post(URL, form);
 
     promise.then((res) => {
-      setReservation(form)
+      setReservation(form);
       navigate("/sucesso");
     });
 
@@ -235,31 +268,40 @@ export default function SectionPage({ section, setSection, setReservation, seats
       <form onSubmit={bookSeats}>
         {seatsSelected.map((a) => (
           <Formulario key={a.id} id={a.id}>
-            <label htmlFor="nome">Nome do comprador <span>- poltrona {a.name}:</span></label>
+            <label htmlFor="nome">
+              Nome do comprador <span>- poltrona {a.name}:</span>
+            </label>
             <input
               name="nome"
               id={a.id}
               type="text"
               placeholder="Digite seu nome..."
-              onBlur={handleForm}
+              onChange={handleForm}
               //value={form.compradores[`nome${a.name}`]}
               required
+              minLength="3"
             />
-            <label htmlFor="cpf">CPF do comprador <span>- poltrona {a.name}:</span></label>
+            <label htmlFor="cpf">
+              CPF do comprador <span>- poltrona {a.name}:</span>
+            </label>
             <input
               name="cpf"
               id={a.id}
               type="text"
               placeholder="Digite seu CPF..."
-              onBlur={handleForm}
+              onChange={handleForm}
+              // onBlur={cpfLength}
               //value={form.compradores[`cpf${a.name}`]}
               required
-              // maxLength="14"
-              // pattern="[0-9]"
+              maxLength="11"
+              minLength="11"
+              //pattern="[0-9]"
             />
           </Formulario>
         ))}
-        <ReservButton enable={enableReservation} type="submit">Reservar assento(s)</ReservButton>
+        <ReservButton enable={enableReservation} type="submit">
+          Reservar assento(s)
+        </ReservButton>
       </form>
       <Footer>
         <BoxMovie>
@@ -377,8 +419,8 @@ const Formulario = styled.div`
   line-height: 21px;
   color: #293845;
   margin-bottom: 20px;
-  span{
-    font-size: 14px ;
+  span {
+    font-size: 14px;
     line-height: 16px;
     color: #afafaf;
   }
@@ -410,7 +452,7 @@ const ReservButton = styled.button`
   font-size: 18px;
   line-height: 21px;
   color: #fff;
-  display: ${(props) => props.enable ? "flex" : "none"};
+  display: ${(props) => (props.enable ? "flex" : "none")};
   align-items: center;
   justify-content: center;
   cursor: pointer;

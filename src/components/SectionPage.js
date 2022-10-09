@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import alfabeto from "./alfabeto";
-import BackArrow from "./modelComponents";
+import BackArrow, { Spinner } from "./modelComponents";
 
 function isEmpty(obj) {
   for (let prop in obj) {
@@ -51,7 +51,7 @@ export default function SectionPage({
   }
 
   if (error === null && isEmpty(section) === true) {
-    return <div>Carregando...</div>;
+    return <Spinner />
   }
 
   // function name(e) {

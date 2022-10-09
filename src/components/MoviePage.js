@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
-import BackArrow from "./modelComponents";
+import BackArrow, { Spinner } from "./modelComponents";
 
 function isEmpty(obj) {
   for (let prop in obj) {
@@ -42,7 +42,7 @@ export default function MoviePage() {
   }
 
   if (error === null && isEmpty(movie) === true) {
-    return <div>Carregando...</div>;
+    return <Spinner />
   }
 
   return (

@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import spin from '../images/spinner.gif'
 
 export default function BackArrow({ way }) {
   const navigate = useNavigate();
@@ -13,6 +14,14 @@ export default function BackArrow({ way }) {
   );
 }
 
+export function Spinner(){
+  return <SpinnerImg src={spin} alt="Gif carregando página" />
+}
+
+
+const SpinnerImg = styled.img`
+  width: 390px;
+`
 const Arrow = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,3 +48,4 @@ const Abc = styled.div`
   top: 5px;
   z-index: -1;
 `;
+

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import BackArrow from "./modelComponents";
+import BackArrow, { Spinner } from "./modelComponents";
 import Movie from "./Movie";
 
 export default function MoviesListPage({ setRemoveNavBar }) {
@@ -31,7 +31,7 @@ export default function MoviesListPage({ setRemoveNavBar }) {
   }
 
   if (error === null && movies === undefined) {
-    return <div>Carregando...</div>;
+    return <Spinner />
   }
 
   return (

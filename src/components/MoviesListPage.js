@@ -14,14 +14,11 @@ export default function MoviesListPage({ setRemoveNavBar }) {
     const promise = axios.get(URL);
 
     promise.then((res) => {
-      console.log(res.data);
       setMovies(res.data);
       setError(null);
     });
 
     promise.catch((err) => {
-      console.log("Este é o erro", err);
-
       setError(err.message);
     });
   }, []);
@@ -31,7 +28,7 @@ export default function MoviesListPage({ setRemoveNavBar }) {
   }
 
   if (error === null && movies === undefined) {
-    return <Spinner />
+    return <Spinner />;
   }
 
   return (

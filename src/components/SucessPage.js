@@ -7,9 +7,6 @@ export default function SucessPage({
   seatsSelected,
 }) {
   const navigate = useNavigate();
-
-  console.log(compradores);
-  console.log(section);
   const {
     movie: { title },
     day: { date },

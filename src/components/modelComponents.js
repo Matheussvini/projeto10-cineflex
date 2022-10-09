@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import spin from '../images/spinner.gif'
+import spin from "../images/spinner.gif";
 
 export default function BackArrow({ way }) {
   const navigate = useNavigate();
-  console.log(way)
   return (
     <Arrow onClick={() => navigate(way)}>
       <ion-icon name="arrow-back-circle-sharp"></ion-icon>
@@ -14,14 +13,13 @@ export default function BackArrow({ way }) {
   );
 }
 
-export function Spinner(){
-  return <SpinnerImg src={spin} alt="Gif carregando página" />
+export function Spinner() {
+  return <SpinnerImg src={spin} alt="Gif carregando página" />;
 }
-
 
 const SpinnerImg = styled.img`
   width: 390px;
-`
+`;
 const Arrow = styled.div`
   display: flex;
   flex-direction: column;
@@ -48,4 +46,3 @@ const Abc = styled.div`
   top: 5px;
   z-index: -1;
 `;
-

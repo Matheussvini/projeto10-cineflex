@@ -17,22 +17,17 @@ export default function MoviePage() {
   const { filmeId } = useParams();
   const [error, setError] = useState(null);
 
-  console.log("filme vazio?", isEmpty(movie));
   useEffect(() => {
     const promise = axios.get(
       `https://mock-api.driven.com.br/api/v5/cineflex/movies/${filmeId}/showtimes`
     );
 
     promise.then((res) => {
-      console.log(res);
       setMovie(res.data);
-      console.log("res está vazia?", isEmpty(res));
       setError(null);
     });
 
     promise.catch((err) => {
-      console.log("Este é o erro", err);
-
       setError(err.message);
     });
   }, []);
@@ -42,18 +37,15 @@ export default function MoviePage() {
   }
 
   if (error === null && isEmpty(movie) === true) {
-    return <Spinner />
+    return <Spinner />;
   }
 
   return (
     <Container>
       <BackArrow way="/filmes-em-cartaz" />
-      {console.log(movie)}
-      {console.log(movie.days)}
       <h3>Selecione um horário</h3>
       {movie.days.map((d) => (
         <>
-          {console.log(d)}
           <h4>
             {d.weekday} - {d.date}
           </h4>
@@ -102,7 +94,6 @@ const Container = styled.div`
 `;
 const Schedules = styled.div`
   display: flex;
-  // justify-content: start;
   align-items: flex-end;
   button {
     margin: 22.5px 8px 22.5px 0;
@@ -125,7 +116,6 @@ const Footer = styled.div`
   position: fixed;
   bottom: 0;
   left: 50%;
-  //width: 100%;
   height: 117px;
   width: 390px;
   display: flex;
@@ -148,7 +138,6 @@ const BoxMovie = styled.div`
   border-radius: 2px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  //margin: 0 15px 15px 11px;
   display: flex;
   justify-content: center;
   align-items: center;

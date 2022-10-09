@@ -9,23 +9,20 @@ import SectionPage from "./SectionPage";
 import SucessPage from "./SucessPage";
 import { useState } from "react";
 
-
 export default function App() {
   const [removeNavBar, setRemoveNavBar] = useState(false);
   const [reservation, setReservation] = useState({});
   const [section, setSection] = useState({});
   const [seatsSelected, setSeatsSelected] = useState([]);
 
-
-
   return (
     <BrowserRouter>
       <ScreenContainer show={removeNavBar}>
         {!removeNavBar && (
           <NavBar>
-            <Link to="/" >
-            <img src={logo} alt="Logo CineFlex" />
-            </Link>            
+            <Link to="/">
+              <img src={logo} alt="Logo CineFlex" />
+            </Link>
           </NavBar>
         )}
         <Routes>
@@ -38,8 +35,28 @@ export default function App() {
             element={<MoviesListPage setRemoveNavBar={setRemoveNavBar} />}
           />
           <Route path="/filme/:filmeId" element={<MoviePage />} />
-          <Route path="/sessao/:sessaoID" element={<SectionPage section={section} setSection={setSection} setReservation={setReservation} seatsSelected={seatsSelected} setSeatsSelected={setSeatsSelected}  />} />
-          <Route path="/sucesso" element={<SucessPage section={section} reservation={reservation} seatsSelected={seatsSelected} />} />
+          <Route
+            path="/sessao/:sessaoID"
+            element={
+              <SectionPage
+                section={section}
+                setSection={setSection}
+                setReservation={setReservation}
+                seatsSelected={seatsSelected}
+                setSeatsSelected={setSeatsSelected}
+              />
+            }
+          />
+          <Route
+            path="/sucesso"
+            element={
+              <SucessPage
+                section={section}
+                reservation={reservation}
+                seatsSelected={seatsSelected}
+              />
+            }
+          />
         </Routes>
         <GlobalStyle />
       </ScreenContainer>

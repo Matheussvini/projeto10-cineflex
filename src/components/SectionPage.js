@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import alfabeto from "./alfabeto";
 import BackArrow, { Spinner } from "./modelComponents";
@@ -21,15 +21,12 @@ export default function SectionPage({
 }) {
   const { sessaoID } = useParams();
   const [error, setError] = useState(null);
-  const [nameUser, setNameUser] = useState(undefined);
-  const [cpfUser, setCpfUser] = useState("");
   const [form, setForm] = useState({
     ids: [],
     compradores: [],
   });
   const navigate = useNavigate();
   const [enableReservation, setEnableReservation] = useState(false);
-  console.log("AQUIIIIIIII", section)
 
   useEffect(() => {
     const promise = axios.get(
@@ -51,59 +48,8 @@ export default function SectionPage({
   }
 
   if (error === null && isEmpty(section) === true) {
-    return <Spinner />
+    return <Spinner />;
   }
-
-  // function name(e) {
-  //   const value = e.target.value;
-  // }
-  // function cpf(e) {
-  //   const value = e.target.value;
-
-  //   let cpfUpdated;
-  //   if (value !== "") {
-  //     for (let i = 0; i < value.length; i++) {
-  //       if (alfabeto.includes(value[i])) {
-  //         return setCpfUser(""), alert("CPF inválido");
-  //       }
-  //     }
-  //     cpfUpdated = value.replace(
-  //       /(\d{3})(\d{3})(\d{3})(\d{2})/,
-  //       function (regex, argumento1, argumento2, argumento3, argumento4) {
-  //         return (
-  //           argumento1 + "." + argumento2 + "." + argumento3 + "-" + argumento4
-  //         );
-  //       }
-  //     );
-  //     setCpfUser(cpfUpdated);
-  //     let regex = /\d/g;
-  //     let cpfOnlyNumber = cpfUpdated.match(regex).join("");
-  //     console.log("filtro", cpfOnlyNumber);
-
-  //     let cpfValido = /^(([0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}))$/;
-  //     if (
-  //       cpfValido.test(cpfUpdated) == false &&
-  //       (cpfUpdated.length === 14 ||
-  //         cpfOnlyNumber.length === 11 ||
-  //         cpfOnlyNumber.length === 0)
-  //     ) {
-  //       alert("CPF invalido");
-  //       setCpfUser("");
-  //     }
-  //   } else {
-  //     setCpfUser("");
-  //   }
-  // }
-  // function abc(idCompare) {
-  //   console.log("entrou");
-  //   for (let i = 0; i < seatsSelected.length; i++) {
-  //     console.log(seatsSelected[i].id === idCompare);
-  //     if (seatsSelected[i].id === idCompare) {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
 
   function avaliaOnclick(element) {
     for (let i = 0; i < seatsSelected.length; i++) {
@@ -125,42 +71,29 @@ export default function SectionPage({
     setEnableReservation(true);
   }
 
-  console.log(form);
-
-  function cpfLength(e){
-    if(e.target.value.length !== 11){
-      alert("CPF inválido! Digite 11 dígitos")
-    }
-  }
-
   function handleForm(e) {
-    console.log(e.target);
     const { name, value, id } = e.target; //name = campo do input (nome ou cpf), value = valor correspondente ao input
 
-    if(name === "nome"){
+    if (name === "nome") {
       if (value !== "") {
-            for (let i = 0; i < value.length; i++) {
-              if (!alfabeto.includes(value[i])) {
-                alert("Nome inválido, digite somente letras");
-              }
-            }
+        for (let i = 0; i < value.length; i++) {
+          if (!alfabeto.includes(value[i])) {
+            alert("Nome inválido, digite somente letras");
+          }
+        }
+      }
     }
-
-  }
-
-    if(name === "cpf"){
+    if (name === "cpf") {
       if (value !== "") {
-            for (let i = 0; i < value.length; i++) {
-              if (alfabeto.includes(value[i])) {
-                alert("CPF inválido, digite somente números");
-              }
-            }
+        for (let i = 0; i < value.length; i++) {
+          if (alfabeto.includes(value[i])) {
+            alert("CPF inválido, digite somente números");
+          }
+        }
+      }
     }
-
-  }
     // lista de ids
     const aa = form.ids.find((item) => item === id); // retorna o numero do id
-    // console.log("1o", aa)
     if (aa === undefined) {
       setForm({
         ids: [...form.ids, id],
@@ -181,7 +114,6 @@ export default function SectionPage({
       } else {
         const i = form.compradores.indexOf(bb);
         let newArray = form.compradores;
-        console.log(newArray[i]);
         newArray[i].cpf = value;
         setForm({
           ...form,
@@ -189,37 +121,9 @@ export default function SectionPage({
         });
       }
     }
-    // if(name.includes("nome")){
-    //   if(form.ids.length === 0){
-    //     setForm({
-    //       ids: [id],
-    //       compradores: [{ idAssento: id, [name]: value }],
-    //     });
-    //   }else{
-    //     setForm({
-    //       ids: [...form.ids, id],
-    //       compradores: [...form.compradores, { idAssento: id, [name]: value}],
-    //     });
-    //   }
-    // }
-    // if(name.includes("cpf")){
-    //     setForm({
-    //       ...form,
-    //       compradores: {...form.compradores[form.compradores.length - 1], [name]: value  },
-    //     });
-
-    // }
-
-    // setForm({
-    //   ids: [...form.ids, id],
-    //   compradores: [...form.compradores, { idAssento: id, [name]: value }],
-    // });
-    // // setForm({...form, [e.target.name]: e.target.value})
   }
 
   function bookSeats(e) {
-    console.log(form);
-
     e.preventDefault();
     const URL =
       "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many";
@@ -280,7 +184,6 @@ export default function SectionPage({
               type="text"
               placeholder="Digite seu nome..."
               onChange={handleForm}
-              //value={form.compradores[`nome${a.name}`]}
               required
               minLength="3"
             />
@@ -293,12 +196,9 @@ export default function SectionPage({
               type="text"
               placeholder="Digite seu CPF..."
               onChange={handleForm}
-              // onBlur={cpfLength}
-              //value={form.compradores[`cpf${a.name}`]}
               required
               maxLength="11"
               minLength="11"
-              //pattern="[0-9]"
             />
           </Formulario>
         ))}
@@ -382,10 +282,11 @@ const Seat = styled.button`
   font-size: 11px;
   line-height: 13px;
   color: #000;
-  &:hover{
-  opacity: ${(props) => (props.isAvailable && "60%")};
-  transform: ${(props) => (props.isAvailable && "translateY(-5px)")};
-  box-shadow: ${(props) => (props.isAvailable && "-4px 4px 4px rgba(0, 0, 0, 0.25)")};
+  &:hover {
+    opacity: ${(props) => props.isAvailable && "60%"};
+    transform: ${(props) => props.isAvailable && "translateY(-5px)"};
+    box-shadow: ${(props) =>
+      props.isAvailable && "-4px 4px 4px rgba(0, 0, 0, 0.25)"};
   }
 `;
 const Subtitle = styled.div`
@@ -422,7 +323,6 @@ const SubSeat = styled(Seat)`
 const Formulario = styled.div`
   display: flex;
   flex-direction: column;
-  //background-color: aquamarine;
   font-size: 18px;
   line-height: 21px;
   color: #293845;
@@ -473,7 +373,6 @@ const Footer = styled.div`
   position: fixed;
   bottom: 0;
   left: 50%;
-  //width: 100%;
   height: 117px;
   width: 390px;
   display: flex;
@@ -496,12 +395,10 @@ const BoxMovie = styled.div`
   border-radius: 2px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   background-color: #fff;
-  //margin: 0 15px 15px 11px;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0 14px;
-
   img {
     width: 48px;
     height: 72px;

@@ -44,19 +44,19 @@ export default function MoviePage() {
     <Container>
       <BackArrow way="/filmes-em-cartaz" />
       <h3>Selecione um horário</h3>
-      {movie.days.map((d) => (
-        <>
+      {movie.days.map((d, i) => (
+        <div key={i} >
           <h4>
             {d.weekday} - {d.date}
           </h4>
           <Schedules>
-            {d.showtimes.map((h) => (
-              <Link to={`/sessao/${h.id}`}>
+            {d.showtimes.map((h,i) => (
+              <Link to={`/sessao/${h.id}`} key={i} >
                 <button>{h.name}</button>
               </Link>
             ))}
           </Schedules>
-        </>
+        </div>
       ))}
       <Footer>
         <BoxMovie>

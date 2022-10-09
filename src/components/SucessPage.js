@@ -1,7 +1,11 @@
 import { useNavigate } from "react-router-dom/dist";
 import styled from "styled-components";
 
-export default function SucessPage({ section, reservation: { compradores}, seatsSelected }) {
+export default function SucessPage({
+  section,
+  reservation: { compradores },
+  seatsSelected,
+}) {
   const navigate = useNavigate();
 
   console.log(compradores);
@@ -24,22 +28,23 @@ export default function SucessPage({ section, reservation: { compradores}, seats
       </BoxInfo>
       <BoxInfo>
         <h3>Ingressos:</h3>
-        {seatsSelected.map((a) => <span>Assento - {a.name} </span> )}
+        {seatsSelected.map((a) => (
+          <span>Assento - {a.name} </span>
+        ))}
       </BoxInfo>
 
       <BoxInfo>
         <h3>Compradores:</h3>
 
         {compradores.map((c, i) => (
-            <Buyer>
-                <span>Assento: {seatsSelected[i].name}</span>
-                <span>Nome: {c.nome}</span>
-                <span>CPF: {c.cpf}</span>
-            </Buyer>
+          <Buyer>
+            <span>Assento: {seatsSelected[i].name}</span>
+            <span>Nome: {c.nome}</span>
+            <span>CPF: {c.cpf}</span>
+          </Buyer>
         ))}
-
       </BoxInfo>
-      <HomeButton onClick={() => navigate("/") } >Voltar para Home</HomeButton>
+      <HomeButton onClick={() => navigate("/")}>Voltar para Home</HomeButton>
     </Container>
   );
 }
@@ -86,11 +91,11 @@ const BoxInfo = styled.div`
   margin-bottom: 30px;
 `;
 const Buyer = styled.div`
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
 
-    span {
+  span {
     font-size: 18px;
     line-height: 21px;
     color: #293845;

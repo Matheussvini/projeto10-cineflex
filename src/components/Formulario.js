@@ -21,7 +21,7 @@ export default function Formulario({
 
       //validação nome:
       for (let x = 0; x < comprador.nome.length; x++) {
-        if (!alfabeto.includes(comprador.nome[x])) {
+        if (!alfabeto.includes(comprador.nome[x].toLowerCase())) {
           return alert("Nome inválido, digite somente letras");
         }
       }

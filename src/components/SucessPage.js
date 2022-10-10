@@ -80,6 +80,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
   }
   h3 {
     height: auto;
@@ -99,6 +100,9 @@ const BoxInfo = styled.div`
   justify-content: space-around;
   margin-bottom: 30px;
   width: 390px;
+  @media (max-width: 400px) {
+    align-items: center;
+  }
 `;
 const Buyer = styled.div`
   margin-bottom: 20px;

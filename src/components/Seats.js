@@ -9,6 +9,9 @@ export default function Seats({
   setForm,
 }) {
   function avaliaOnclick(element) {
+    if(!element.isAvailable){
+      return alert("Esse assento não está disponível, por favor selecione outro.")
+    }
     for (let i = 0; i < seatsSelected.length; i++) {
       if (seatsSelected[i].id === element.id) {
         if (seatsSelected.length === 1) {
@@ -56,7 +59,6 @@ export default function Seats({
             seatsSelected={seatsSelected}
             seatId={s.id}
             onClick={() => avaliaOnclick(s)}
-            disabled={!s.isAvailable}
             key={s.id}
           >
             {s.name}

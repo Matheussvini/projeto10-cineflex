@@ -85,7 +85,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 390px;
+  /* max-width: 390px; */
   height: 100%;
   min-height: 100vh;
   margin: 0 15px;
@@ -110,13 +110,12 @@ const Container = styled.div`
 const Footer = styled.div`
   position: fixed;
   bottom: 0;
-  left: 50%;
+  left: 0;
   height: 117px;
-  width: 390px;
+  width: 100%;
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
-  transform: translate(-48%, 0);
   background-color: #dfe6ed;
   box-sizing: border-box;
   border: 1px solid #9eadba;

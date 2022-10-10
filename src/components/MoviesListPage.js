@@ -49,7 +49,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 390px;
+  width: 100%;
   h3 {
     font-size: 24px;
     line-height: 28px;
@@ -61,7 +61,8 @@ const Container = styled.div`
 `;
 const MoviesContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
   flex-wrap: wrap;
   margin: 0 15px;
 `;

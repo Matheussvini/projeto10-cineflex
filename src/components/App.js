@@ -54,6 +54,7 @@ export default function App() {
                 section={section}
                 reservation={reservation}
                 seatsSelected={seatsSelected}
+                setSeatsSelected={setSeatsSelected}
               />
             }
           />
@@ -67,7 +68,7 @@ export default function App() {
 const NavBar = styled.div`
   position: fixed;
   top: 0;
-  width: 390px;
+  width: 100%;
   height: 80px;
   overflow: hidden;
   background-color: #c3cfd9;
@@ -76,7 +77,7 @@ const NavBar = styled.div`
     left: 50%;
     top: 50%;
     height: auto;
-    width: 75%;
+    width: 292.5px;
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);

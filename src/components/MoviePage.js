@@ -8,7 +8,6 @@ function isEmpty(obj) {
   for (let prop in obj) {
     if (obj.hasOwnProperty(prop)) return false;
   }
-
   return true;
 }
 
@@ -45,18 +44,18 @@ export default function MoviePage() {
       <BackArrow way="/filmes-em-cartaz" />
       <h3>Selecione um horário</h3>
       {movie.days.map((d, i) => (
-        <div key={i} >
+        <SectionBox key={i}>
           <h4>
             {d.weekday} - {d.date}
-          </h4>
+          </h4>          
           <Schedules>
-            {d.showtimes.map((h,i) => (
-              <Link to={`/sessao/${h.id}`} key={i} >
+            {d.showtimes.map((h, i) => (
+              <Link to={`/sessao/${h.id}`} key={i}>
                 <button>{h.name}</button>
               </Link>
             ))}
           </Schedules>
-        </div>
+        </SectionBox>
       ))}
       <Footer>
         <BoxMovie>
@@ -73,7 +72,6 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 390px;
   margin: 0 15px;
   box-sizing: border-box;
   padding: 0 24px 50px 24px;
@@ -85,6 +83,7 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
   }
   h4 {
     font-size: 20px;
@@ -92,9 +91,19 @@ const Container = styled.div`
     color: #293845;
   }
 `;
+const SectionBox = styled.div`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 390px;
+`;
 const Schedules = styled.div`
   display: flex;
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
   button {
     margin: 22.5px 8px 22.5px 0;
     width: 83px;
@@ -115,13 +124,12 @@ const Schedules = styled.div`
 const Footer = styled.div`
   position: fixed;
   bottom: 0;
-  left: 50%;
+  left: 0;
   height: 117px;
-  width: 390px;
+  width: 100%;
   display: flex;
-  justify-content: start;
+  justify-content: center;
   align-items: center;
-  transform: translate(-48%, 0);
   background-color: #dfe6ed;
   box-sizing: border-box;
   border: 1px solid #9eadba;

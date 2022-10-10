@@ -63,8 +63,8 @@ export default function Seats({
 const SeatsBox = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-items: center;
+  max-width: 830px;  
 `;
 const Seat = styled.button`
   width: 26px;

@@ -5,6 +5,7 @@ export default function SucessPage({
   section,
   reservation: { compradores },
   seatsSelected,
+  setSeatsSelected,
 }) {
   const navigate = useNavigate();
   const {
@@ -26,7 +27,7 @@ export default function SucessPage({
       <BoxInfo>
         <h3>Ingressos:</h3>
         {seatsSelected.map((a, i) => (
-          <span key={i} >Assento - {a.name} </span>
+          <span key={i}>Assento - {a.name} </span>
         ))}
       </BoxInfo>
 
@@ -34,14 +35,16 @@ export default function SucessPage({
         <h3>Compradores:</h3>
 
         {compradores.map((c, i) => (
-          <Buyer key={i} >
+          <Buyer key={i}>
             <span>Assento: {seatsSelected[i].name}</span>
             <span>Nome: {c.nome}</span>
             <span>CPF: {c.cpf}</span>
           </Buyer>
         ))}
       </BoxInfo>
-      <HomeButton onClick={() => navigate("/")}>Voltar para Home</HomeButton>
+      <HomeButton onClick={() => (setSeatsSelected([]), navigate("/"))}>
+        Voltar para Home
+      </HomeButton>
     </Container>
   );
 }
@@ -50,8 +53,8 @@ const Container = styled.div`
   background-color: #fff;
   display: flex;
   flex-direction: column;
+  align-items: center;
   width: 100%;
-  max-width: 390px;
   height: 100%;
   min-height: 100vh;
   margin: 0 15px;
@@ -86,6 +89,7 @@ const BoxInfo = styled.div`
   align-items: flex-start;
   justify-content: space-around;
   margin-bottom: 30px;
+  width: 390px;
 `;
 const Buyer = styled.div`
   margin-bottom: 20px;

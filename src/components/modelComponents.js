@@ -28,13 +28,16 @@ const Arrow = styled.div`
   font-size: 40px;
   position: fixed;
   top: 12px;
-  left: 50%;
-  transform: translate(-180px, 0);
+  left: 50px;
+  /* transform: translate(-180px, 0); */
   cursor: pointer;
   span {
     font-size: 12px;
     font-weight: 700;
     color: #e8833a;
+  }
+  @media (max-width: 370px) {
+    left: 5px;
   }
 `;
 const Abc = styled.div`

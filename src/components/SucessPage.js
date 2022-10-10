@@ -25,8 +25,8 @@ export default function SucessPage({
       </BoxInfo>
       <BoxInfo>
         <h3>Ingressos:</h3>
-        {seatsSelected.map((a) => (
-          <span>Assento - {a.name} </span>
+        {seatsSelected.map((a, i) => (
+          <span key={i} >Assento - {a.name} </span>
         ))}
       </BoxInfo>
 
@@ -34,7 +34,7 @@ export default function SucessPage({
         <h3>Compradores:</h3>
 
         {compradores.map((c, i) => (
-          <Buyer>
+          <Buyer key={i} >
             <span>Assento: {seatsSelected[i].name}</span>
             <span>Nome: {c.nome}</span>
             <span>CPF: {c.cpf}</span>

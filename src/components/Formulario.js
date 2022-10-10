@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import alfabeto from "./alfabeto";

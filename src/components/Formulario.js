@@ -3,18 +3,39 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import alfabeto from "./alfabeto";
+import algarismos from "./algarismos";
 
 export default function Formulario({
   seatsSelected,
   enableReservation,
   setReservation,
   form,
-  setForm
+  setForm,
 }) {
   const navigate = useNavigate();
 
   function bookSeats(e) {
     e.preventDefault();
+
+    for (let i = 0; i < form.compradores.length; i++) {
+      const comprador = form.compradores[i];
+
+      //validação nome:
+      for (let x = 0; x < comprador.nome.length; x++) {
+        if (!alfabeto.includes(comprador.nome[x])) {
+          return alert("Nome inválido, digite somente letras");
+        }
+      }
+
+      //validação cpf:
+      for (let y = 0; y < comprador.cpf.length; y++) {
+        if (!algarismos.includes(Number(comprador.cpf[y]))) {
+          console.log(comprador.cpf[y]);
+          return alert("CPF inválido, digite somente números");
+        }
+      }
+    }
+
     const URL =
       "https://mock-api.driven.com.br/api/v5/cineflex/seats/book-many";
 
@@ -46,7 +67,7 @@ export default function Formulario({
     if (name === "cpf") {
       if (value !== "") {
         for (let i = 0; i < value.length; i++) {
-          if (alfabeto.includes(value[i])) {
+          if (!algarismos.includes(Number(value[i]))) {
             alert("CPF inválido, digite somente números");
           }
         }
@@ -106,7 +127,7 @@ export default function Formulario({
             name="cpf"
             id={a.id}
             type="text"
-            placeholder="Digite seu CPF..."
+            placeholder="Digite seu CPF... (somente números)"
             onChange={handleForm}
             required
             maxLength="11"

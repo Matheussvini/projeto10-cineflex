@@ -21,8 +21,12 @@ const BoxMovie = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   img {
     width: 129px;
     height: 193px;
+    &:hover{
+      opacity: 60%;
+    }
   }
 `;

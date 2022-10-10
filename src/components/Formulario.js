@@ -37,8 +37,9 @@ export default function Formulario({
 
     if (name === "nome") {
       if (value !== "") {
-        for (let i = 0; i < value.length; i++) {
-          if (!alfabeto.includes(value[i])) {
+        const newValue = value.toLowerCase();
+        for (let i = 0; i < newValue.length; i++) {
+          if (!alfabeto.includes(newValue[i])) {
             alert("Nome inválido, digite somente letras");
           }
         }

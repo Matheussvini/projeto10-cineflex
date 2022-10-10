@@ -29,7 +29,6 @@ export default function Formulario({
       //validação cpf:
       for (let y = 0; y < comprador.cpf.length; y++) {
         if (!algarismos.includes(Number(comprador.cpf[y]))) {
-          console.log(comprador.cpf[y]);
           return alert("CPF inválido, digite somente números");
         }
       }

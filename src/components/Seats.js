@@ -9,8 +9,10 @@ export default function Seats({
   setForm,
 }) {
   function avaliaOnclick(element) {
-    if(!element.isAvailable){
-      return alert("Esse assento não está disponível, por favor selecione outro.")
+    if (!element.isAvailable) {
+      return alert(
+        "Esse assento não está disponível, por favor selecione outro."
+      );
     }
     for (let i = 0; i < seatsSelected.length; i++) {
       if (seatsSelected[i].id === element.id) {
@@ -35,9 +37,13 @@ export default function Seats({
               setSeatsSelected(
                 seatsSelected.filter((item) => item.id !== element.id)
               );
-              const newCompradores = form.compradores.filter((item) => Number(item.idAssento) !== element.id )
-              const newIds = form.ids.filter((item) => Number(item) !== element.id )
-              setForm({ids: newIds, compradores: newCompradores});
+            const newCompradores = form.compradores.filter(
+              (item) => Number(item.idAssento) !== element.id
+            );
+            const newIds = form.ids.filter(
+              (item) => Number(item) !== element.id
+            );
+            setForm({ ids: newIds, compradores: newCompradores });
             return;
           }
         }
@@ -53,9 +59,6 @@ export default function Seats({
     setEnableReservation(true);
   }
 
-
-  console.log(seatsSelected)
-  console.log(form)
   return (
     <>
       <SeatsBox>

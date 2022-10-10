@@ -69,7 +69,6 @@ export default function SectionPage({
         setReservation={setReservation}
         form={form}
         setForm={setForm}
-
       />
       <Footer>
         <BoxMovie>

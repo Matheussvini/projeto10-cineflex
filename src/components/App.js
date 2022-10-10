@@ -34,7 +34,10 @@ export default function App() {
             path="/filmes-em-cartaz"
             element={<MoviesListPage setRemoveNavBar={setRemoveNavBar} />}
           />
-          <Route path="/filme/:filmeId" element={<MoviePage setSeatsSelected={setSeatsSelected} />} />
+          <Route
+            path="/filme/:filmeId"
+            element={<MoviePage setSeatsSelected={setSeatsSelected} />}
+          />
           <Route
             path="/sessao/:sessaoID"
             element={

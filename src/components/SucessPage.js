@@ -14,13 +14,18 @@ export default function SucessPage({
     name: hour,
   } = section;
 
-  let newCompradores = []
+  let newCompradores = [];
 
-  for(let i =0; i < compradores.length; i++){ // altera o formato do cpf
+  for (let i = 0; i < compradores.length; i++) {
+    // altera o formato do cpf
     const comprador = compradores[i];
-    const string = comprador.cpf
-    const newCpf = `${string[0]}${string[1]}${string[2]}.${string[3]}${string[4]}${string[5]}.${string[6]}${string[7]}${string[8]}-${string[9]}${string[10]}`
-    newCompradores.push({idAssento: comprador.idAssento ,nome: comprador.nome, cpf: newCpf})
+    const string = comprador.cpf;
+    const newCpf = `${string[0]}${string[1]}${string[2]}.${string[3]}${string[4]}${string[5]}.${string[6]}${string[7]}${string[8]}-${string[9]}${string[10]}`;
+    newCompradores.push({
+      idAssento: comprador.idAssento,
+      nome: comprador.nome,
+      cpf: newCpf,
+    });
   }
 
   return (

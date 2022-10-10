@@ -11,7 +11,7 @@ function isEmpty(obj) {
   return true;
 }
 
-export default function MoviePage({setSeatsSelected}) {
+export default function MoviePage({ setSeatsSelected }) {
   const [movie, setMovie] = useState({});
   const { filmeId } = useParams();
   const [error, setError] = useState(null);
@@ -24,7 +24,7 @@ export default function MoviePage({setSeatsSelected}) {
     promise.then((res) => {
       setMovie(res.data);
       setError(null);
-      setSeatsSelected([])
+      setSeatsSelected([]);
     });
 
     promise.catch((err) => {
@@ -48,7 +48,7 @@ export default function MoviePage({setSeatsSelected}) {
         <SectionBox key={i}>
           <h4>
             {d.weekday} - {d.date}
-          </h4>          
+          </h4>
           <Schedules>
             {d.showtimes.map((h, i) => (
               <Link to={`/sessao/${h.id}`} key={i}>

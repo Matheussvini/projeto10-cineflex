@@ -20,7 +20,7 @@ export default function Seats({
           setEnableReservation(true);
         }
         const obj = form.compradores.find(
-          (item) => item.idAssento == element.id
+          (item) => Number(item.idAssento) === element.id
         );
         if (obj !== undefined) {
           if (obj.nome === "" || obj.cpf === "") {
@@ -35,6 +35,9 @@ export default function Seats({
               setSeatsSelected(
                 seatsSelected.filter((item) => item.id !== element.id)
               );
+              const newCompradores = form.compradores.filter((item) => item.idAssento != element.id )
+              const newIds = form.ids.filter((item) => item != element.id )
+              setForm({ids: newIds, compradores: newCompradores});
             return;
           }
         }
@@ -50,6 +53,9 @@ export default function Seats({
     setEnableReservation(true);
   }
 
+
+  console.log(seatsSelected)
+  console.log(form)
   return (
     <>
       <SeatsBox>

@@ -35,8 +35,8 @@ export default function Seats({
               setSeatsSelected(
                 seatsSelected.filter((item) => item.id !== element.id)
               );
-              const newCompradores = form.compradores.filter((item) => item.idAssento != element.id )
-              const newIds = form.ids.filter((item) => item != element.id )
+              const newCompradores = form.compradores.filter((item) => Number(item.idAssento) !== element.id )
+              const newIds = form.ids.filter((item) => Number(item) !== element.id )
               setForm({ids: newIds, compradores: newCompradores});
             return;
           }

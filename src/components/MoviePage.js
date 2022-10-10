@@ -11,7 +11,7 @@ function isEmpty(obj) {
   return true;
 }
 
-export default function MoviePage() {
+export default function MoviePage({setSeatsSelected}) {
   const [movie, setMovie] = useState({});
   const { filmeId } = useParams();
   const [error, setError] = useState(null);
@@ -24,6 +24,7 @@ export default function MoviePage() {
     promise.then((res) => {
       setMovie(res.data);
       setError(null);
+      setSeatsSelected([])
     });
 
     promise.catch((err) => {

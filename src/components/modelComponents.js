@@ -29,7 +29,6 @@ const Arrow = styled.div`
   position: fixed;
   top: 12px;
   left: 50px;
-  /* transform: translate(-180px, 0); */
   cursor: pointer;
   span {
     font-size: 12px;

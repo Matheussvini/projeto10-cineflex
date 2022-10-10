@@ -23,6 +23,10 @@ export default function SectionPage({
   const { sessaoID } = useParams();
   const [error, setError] = useState(null);
   const [enableReservation, setEnableReservation] = useState(false);
+  const [form, setForm] = useState({
+    ids: [],
+    compradores: [],
+  });
 
   useEffect(() => {
     const promise = axios.get(
@@ -56,11 +60,16 @@ export default function SectionPage({
         seatsSelected={seatsSelected}
         setSeatsSelected={setSeatsSelected}
         setEnableReservation={setEnableReservation}
+        form={form}
+        setForm={setForm}
       />
       <Formulario
         seatsSelected={seatsSelected}
         enableReservation={enableReservation}
         setReservation={setReservation}
+        form={form}
+        setForm={setForm}
+
       />
       <Footer>
         <BoxMovie>

@@ -8,12 +8,10 @@ export default function Formulario({
   seatsSelected,
   enableReservation,
   setReservation,
+  form,
+  setForm
 }) {
   const navigate = useNavigate();
-  const [form, setForm] = useState({
-    ids: [],
-    compradores: [],
-  });
 
   function bookSeats(e) {
     e.preventDefault();
@@ -87,8 +85,8 @@ export default function Formulario({
 
   return (
     <form onSubmit={bookSeats}>
-      {seatsSelected.map((a) => (
-        <FormBox key={a.id} id={a.id}>
+      {seatsSelected.map((a, i) => (
+        <FormBox key={i} id={a.id}>
           <label htmlFor="nome">
             Nome do comprador <span>- poltrona {a.name}:</span>
           </label>

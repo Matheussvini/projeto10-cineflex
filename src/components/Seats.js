@@ -5,6 +5,8 @@ export default function Seats({
   seatsSelected,
   setSeatsSelected,
   setEnableReservation,
+  form,
+  setForm,
 }) {
   function avaliaOnclick(element) {
     for (let i = 0; i < seatsSelected.length; i++) {
@@ -13,6 +15,25 @@ export default function Seats({
           setEnableReservation(false);
         } else {
           setEnableReservation(true);
+        }
+        const obj = form.compradores.find(
+          (item) => item.idAssento == element.id
+        );
+        if (obj !== undefined) {
+          if (obj.nome === "" || obj.cpf === "") {
+            return setSeatsSelected(
+              seatsSelected.filter((item) => item.id !== element.id)
+            );
+          } else {
+            const confirmation = window.confirm(
+              `Deseja realmente remover o assento ${element.name} e perder os dados inseridos?`
+            );
+            confirmation &&
+              setSeatsSelected(
+                seatsSelected.filter((item) => item.id !== element.id)
+              );
+            return;
+          }
         }
         return setSeatsSelected(
           seatsSelected.filter((item) => item.id !== element.id)
@@ -64,7 +85,7 @@ const SeatsBox = styled.ul`
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  max-width: 830px;  
+  max-width: 830px;
 `;
 const Seat = styled.button`
   width: 26px;
